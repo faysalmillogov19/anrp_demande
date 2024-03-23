@@ -1,0 +1,108 @@
+ {% extends 'layout/EspaceClient.html'%}
+ <!-- Page Heading -->
+ {% load static %}
+ {% block content %}
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4 text-dark">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">{{intitule_demande}}</h6>
+                            <div class="float-right">
+                             {% if not group_facture.payer %}
+                                <a href="#" class="btn btn-primary" onclick="printPageArea('printableArea')"><i class="fa fa-print" ></i></a>
+                             {% endif %}
+                            </div>
+                        </div>
+                        <div class="card-body" id="printableArea">
+                            <div>
+                                <div class="row" style="font-size: 13px;">
+                                    <div class="col-4 text-left">
+                                        MINISTERE DE LA SANTE ET DE L'HYGIENE PUBLIQUE<br>
+                                        -------------------- <br>
+                                        SECRETARIAT GENERAL<br>
+                                        -------------------- <br>
+                                        AGENCE NATIONALE DE REGULATION PHARMACEUTIQUE (ANRP) <br>
+                                        -------------------- <br>
+                                        DIRECTION DE L'ADMINISTRATION ET DES FINANCES
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <img  src="{% static 'images/logo-2.jpg' %}" style="width:300px">
+                                    </div>
+                                    <div class="col-4 float-right">
+                                        <p class="text-center">
+                                            BURKINA FASO <br>
+                                            --------------------- <br>
+                                            Unité - Progrès - gustice
+                                        </p>
+                                        
+
+                                    </div>
+                                    <div style="border: 1px;border-style: double; width: 90%; padding: 2%; margin: 5%;">
+                                        <h4 class="text-center font-weight-bold">
+                                            Facture N° {{group_facture.code}}
+                                        </h4>
+                                    </div>
+                                    
+                                </div>
+                                <div style="border: 1px;border-style: double; width: 90%; padding: 1%; margin: 1%;">
+                                        <span class="font-weight-bold">Objet:</span> Facture de demande d'Autorisaton Spéciale d'Importation<br>
+                                        <span class="font-weight-bold">Periode:</span> {% for per in periode %} {{ per|capfirst }}, {% endfor %}
+                                    </div>
+                                <div style="border: 1px;border-style: double; width: 90%; padding: 1%; margin: 1%;">
+                                          <span class="font-weight-bold">DOIT:</span> {{structure.denomination}}</br>
+                                          {{structure.bp}}; Tel : {{structure.telephone}}</br>
+                                           
+                                </div>
+                                
+                            </div>
+                            <div class="col-12"><br></div>
+                            <div class="table-responsive" style="font-size: 15px;">
+                                <table class="table" style="border: 1px solid;">
+                                    <thead>
+                                        <tr style="border: 1px solid;">
+                                            <th style="border: 1px solid;">N° Prestation</th>
+                                            <th style="border: 1px solid;">Ref facture</th>
+                                            <th style="border: 1px solid;">Date</th>
+                                            <th style="border: 1px solid;">Total items</th>
+                                            <th style="border: 1px solid;">Sans AMM</th>
+                                            <th style="border: 1px solid;">Cout</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for d in data %}
+                                        <tr style="border: 1px solid;">
+                                            <td style="border: 1px solid;">{{d.code}}</td>
+                                            <td style="border: 1px solid;">{{d.asi.code_facture}}</td>
+                                            <td style="border: 1px solid;">{{d.created_at | date:'d/m/Y'}}</td>
+                                            <td style="border: 1px solid;">{{d.total_item}}</td>
+                                            <td style="border: 1px solid;">{{d.nombre}}</td>
+                                            <td style="border: 1px solid;">{{d.cout}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                                <div style="font-size: 15px;">
+                                    Arrêté la présente facture à la somme totale de: <strong>{{num_to_text| capfirst}}</strong>(<strong>{{group_facture.cout}}</strong>) F CFA
+                                </div>
+                            </div>
+                            <div class="container">
+                            <div class="float-right text-center">
+                                <br>
+                                <p class="text-left">
+                                    Ouagadougou, le
+                                </p>
+                                <br>
+                                <p>{{signataire.fonction}}</p>
+                                <br><br><br><br>
+                                <p>
+                                    <ins class="fw-dark text-decoration-underline"><strong>{{signataire.nom_signataire}}</strong></ins> <br>
+                                    {{signataire.titre_honorifique}}
+                                </p>
+                                <p></p>
+                            </div>
+                            
+                        </div>
+                        </div>
+                        
+                    </div>
+  {% endblock %}

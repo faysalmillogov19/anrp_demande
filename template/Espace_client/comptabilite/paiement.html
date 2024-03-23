@@ -1,0 +1,65 @@
+ {% extends 'layout/EspaceClient.html'%}
+ <!-- Page Heading -->
+ {% load static %}
+ {% block content %}
+
+<div class="card shadow mb-4 col-lg-6 offset-md-2">
+                        <div class="card-header py-3">
+                          <div class="">
+                              <h6 class="">Paiement des frais de prestation</h6>
+                          </div>
+                        </div>
+                        <div class="card-body">
+                            
+            <form class="modal-body" method="POST" action="{% url 'paiement' %} ">
+                  {% csrf_token %}
+                {% if asi %}
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Demandeur</label>
+                    <input type="num" class="form-control" value="{{asi.demandeur.user.first_name}} {{asi.demandeur.tel}}"  disabled>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Expediteur</label>
+                    <input type="num" class="form-control" value="{{asi.type_expediteur.libelle}} : {{asi.nom_expediteur}}"  disabled>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Nombre item </label>
+                    <input type="text" class="form-control" value="{{asi.nombre}}" disabled>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">Montant </label>
+                    <input type="text" class="form-control" value="{{asi.cout}}"  disabled>
+                  </div>
+
+                {% endif %}
+                {% if inexistant %}
+                    <div class="form-group">
+                    <p class="text-danger text-center">Element inexistant</p>
+                  </div>
+                {% endif %}
+
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">N° Prestation</label>
+                    <input type="text" class="form-control" minlength="9" name="num_facture" value="{{code_facture}}" required>
+                  </div>
+                  <div class="form-group">
+                    <label for="exampleInputPassword1">N° QUITANCE</label>
+                    <input type="text" class="form-control" name="num_quittance" value="{{num_quittance}}" required>
+                  </div>
+
+                  <div class="card-footer">
+                    <button type="submit" class="btn btn-primary">Enregister</button>
+                    <a type="button" class="btn btn-secondary" data-dismiss="modal">Annuler</a>
+                  </div>
+            </form>
+            
+                        </div>
+                        
+                    </div>
+
+
+
+  {% endblock %}

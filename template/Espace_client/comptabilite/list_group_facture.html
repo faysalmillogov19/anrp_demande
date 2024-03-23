@@ -1,0 +1,50 @@
+ {% extends 'layout/EspaceClient.html'%}
+ <!-- Page Heading -->
+ {% load static %}
+ {% block content %}
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        {% csrf_token  %}
+                        
+                        <div class="card-body row">
+                            <div class="col-3">
+                                <ul class="list-group">
+                                  <li class="list-group-item active">{{structure.denomination}}</li>
+                                  <li class="list-group-item"> Tel : {{structure.telephone}}</li>
+                                  <li class="list-group-item"> Email :{{structure.email}}</li>
+                                  <li class="list-group-item"></li>
+                                </ul>
+                                
+                            </div>
+                            
+                            <div class="table-responsive col-9">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>N° Facture</th>
+                                            <th>Date</th>
+                                            <th>Cout</th>
+                                            <th>Action</th>
+                                            <!--th>Action</th-->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for d in data %}
+                                        <tr>
+                                            <td>{{d.code}}</td>
+                                            <td>{{d.created_at | date:'d/m/Y'}}</td>
+=                                            <td>{{d.cout}}</td>
+                                            <td>
+                                                <a type="button" class="btn btn-outline-warning" href="{% url 'print_group_facture' d.id %}"><i class="fa fa-info"></i></a>
+                                            </td>
+
+                                        </tr>
+                                         
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+  {% endblock %}

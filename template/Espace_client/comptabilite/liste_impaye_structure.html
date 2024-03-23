@@ -1,0 +1,52 @@
+ {% extends 'layout/EspaceClient.html'%}
+ <!-- Page Heading -->
+ {% load static %}
+ {% block content %}
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div>
+                            <br>
+                        </div>
+                        <div class="row text-white">
+                            
+
+                        </div>
+                        <div></div>
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">IMPAYE</h6>
+                        </div>
+                        <div class="card-body">
+                            
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>Structure</th>
+                                            <th>Cout</th>
+                                            <th>Date</th>
+                                            <!--th>Action</th-->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for d in data %}
+                                          {% if d.asi__demandeur__affect_structure__denomination %}
+                                            <tr>
+                                                <td>{{d.asi__demandeur__affect_structure__denomination}}</td>
+                                                <td>{{d.cout}}</td>
+                                                <td>
+                                                    <a type="button" class="btn btn-outline-warning" href="{% url 'list_impaye_groupby__structure' d.asi__demandeur__affect_structure__denomination %}"><i class="fa fa-info"></i></a>
+                                                    
+                                                    <a type="button" class="btn btn-outline-secondary" href="{% url 'list_goup_facture' d.asi__demandeur__affect_structure__denomination %}"><i class="fa fa-coins"></i></a>
+                                                </td>
+
+                                            </tr>
+                                          {% endif %}
+                                         
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+  {% endblock %}

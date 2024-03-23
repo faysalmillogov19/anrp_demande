@@ -1,0 +1,58 @@
+ {% extends 'layout/EspaceClient.html'%}
+ <!-- Page Heading -->
+ {% load static %}
+ {% block content %}
+
+                    <!-- DataTales Example -->
+                    <form class="card shadow mb-4" method="POST" action=" {% url 'create_groupe_facture' structure.id %} ">
+                        {% csrf_token  %}
+                        
+                        <div class="card-body row">
+                            <div class="col-3">
+                                <ul class="list-group">
+                                  <li class="list-group-item active">{{structure.denomination}}</li>
+                                  <li class="list-group-item"> Tel : {{structure.telephone}}</li>
+                                  <li class="list-group-item"> Email :{{structure.email}}</li>
+                                  <li class="list-group-item"> <button class="btn btn-primary float-center" ><i class="fa fa-print"></i></li></button>
+                                </ul>
+                                
+                            </div>
+                            
+                            <div class="table-responsive col-9">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>N° Prestation</th>
+                                            <th>Ref Facture</th>
+                                            <th>Date</th>
+                                            <th>Total items</th>
+                                            <th>Sans AMM</th>
+                                            <th>Cout</th>
+                                            <th>Ajouter</th>
+                                            <th>Action</th>
+                                            <!--th>Action</th-->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for d in data %}
+                                        <tr>
+                                            <td>{{d.code}}</td>
+                                            <td>{{d.asi.code_facture}}</td>
+                                            <td>{{d.created_at | date:'d/m/Y'}}</td>
+                                            <td>{{d.total_item}}</td>
+                                            <td>{{d.nombre}}</td>
+                                            <td>{{d.cout}}</td>
+                                            <td><input class="" type="checkbox" name="choix[]" value="{{d.id}}"  ></td>
+                                            <td>
+                                                <a type="button" class="btn btn-outline-warning" href="#"><i class="fa fa-info"></i></a>
+                                            </td>
+
+                                        </tr>
+                                         
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </form>
+  {% endblock %}

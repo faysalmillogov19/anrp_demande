@@ -1,0 +1,130 @@
+{% extends 'layout/EspaceClient.html'%}
+<!-- Page Heading -->
+{% load static %}
+{% block content %}
+
+                   <!-- DataTales Example -->
+                   <div class="card shadow mb-4 text-dark">
+                       <div class="card-header py-3">
+                           <h6 class="m-0 font-weight-bold text-primary">{{intitule_demande}}</h6>
+                           <div class="float-right">
+                               <button class="btn btn-primary"><i class="fa fa-print" onclick="printPageArea('printableArea')"></i></button>
+                                <a href="{% url 'print_asi' datum.id %}" class="btn btn-outline-danger">Retour <i class="fa fa-back" ></i></a>
+                           </div>
+                       </div>
+                       <div class="card-body" id="printableArea">
+                           <div>
+                               <div class="row" style="font-size: 13px;">
+                                   <div class="col-4 text-center">
+                                       MINISTERE DE LA SANTE ET DE L'HYGIENE PUBLIQUE <br>
+                                       -------------------- <br>
+                                       SECRETARIAT GENERAL<br>
+                                       -------------------- <br>
+                                       AGENCE NATIONALE DE REGULATION PHARMACEUTIQUE (ANRP) <br>
+                                       -------------------- <br>
+                                   </div>
+                                   <div class="col-4">
+                                       
+                                   </div>
+                                   <div class="col-4 float-right">
+                                       <p class="text-center">
+                                           BURKINA FASO <br>
+                                           --------------------- <br>
+                                           Unité - Progrès - gustice
+                                       </p>
+                                       <br><br>
+                                       <p>
+                                           Ouagadougou, le
+                                       </p>
+
+                                   </div>
+                                   <div style="border: 1px;border-style: double; width: 90%; padding: 2%; margin: 5%;">
+                                       <h4 class="text-center font-weight-bold">
+                                           {{intitule_demande}}<br>
+                                       </h4>
+                                   </div>
+                                   
+                               </div>
+                               <div class="display-6 text-justify" style="  font-size: 14px;">
+                                       {{infos.arrete |linebreaks }}
+                               </div>
+                               <div style="font-size: 15px;">
+                                   <br>
+                                   <p class="font-weight-bold"> approuve l'importation :</p>
+                                   <!--p>
+                                       Par DIRECTION DE L'INSPECTION PHARMACEUTIQUE/ANRP, 03 BP 7009 OUAGADOUGOU 03, Tel: 25 32 46 60,  
+                                   </p-->  
+                                   <p>
+                                       Par <span class="font-weight-bold">{{datum.destinataire}}</span> selon la Facture N° <span class="font-weight-bold">{{datum.code_facture}}</span> datée du <span class="font-weight-bold">{{datum.date_facture|date:"d/m/Y"}}</span> (demade datée du <span class="font-weight-bold">{{datum.date_soumission|date:"d/m/Y"}}</span> sous le numéro <span class="font-weight-bold">{{datum.date_soumission|date:"dmY"}}{{datum.id}}</span>),
+                                       <!--effectué par <span class="font-weight-bold">{{datum.demandeur.user.first_name}}--></span> des médicaments et autres produits de santé suivants
+                                   </p>
+                               </div>
+                           </div>
+                           <div class="col-12"><br></div>
+                           <div class="table-responsive" style="font-size: 15px;">
+                             {% if produits %}
+                               <!--table class="table" style="border: 1px solid;">
+                                   <thead>
+                                       <tr style="border: 1px solid;">
+                                           <th style="border: 1px solid;">Dénomination commerciale</th>
+                                           <th style="border: 1px solid;">Catégorie</th>
+                                           <th style="border: 1px solid;">Quantité</th>
+                                           <td style="border: 1px solid;">Prix</td>
+                                       </tr>
+                                   </thead>
+                                   <tbody>
+                                       {% for p in produits %}
+                                       <tr style="border: 1px solid;">
+                                           <td style="border: 1px solid;">{{p.dc}}</td>
+                                           <td style="border: 1px solid;">{{p.categorie.libelle}}</td>
+                                           <td style="border: 1px solid;">{{p.quantite}}</td>
+                                           <td style="border: 1px solid;">{{p.cout}} {{p.devise.libelle}}</td>
+                                       </tr>
+                                       {% endfor %}
+                                   </tbody>
+                               </table-->
+                             {% endif %}
+                             {{datum.note_stupefiant |linebreaks }}
+                               <div style="font-size: 15px;">
+                                   Provenant du <span class="font-weight-bold">{{datum.nom_expediteur}}, {{datum.adresse_expediteur}}</span>
+                               </div>
+                               <div>
+                                   <br>
+                                   <h5 class="font-weight-bold">NB:</h5>
+                                   <p>
+                                       {{datum.objet.description}}
+                                   </p>
+                                   <p style="  font-size: 13px;">
+                                       {{message.duree}} par voie <span class="font-weight-bold">{{datum.voie_entree.libelle}}</span>
+                                       et le transit sera assuré par <span class="font-weight-bold">{{datum.nom_transitaire}}, <!--{{datum.adresse_transitaire}}--></span>
+                                   </p>
+                                   <!--p>
+                                       {{datum.note}}
+                                   </p-->
+                                   <p class="text-right">
+                                       {{infos.mot_fin}}
+                                   </p>
+                                   <p class="float-left">
+                                       Ampiliation:<br>
+                                       DIP/DSMCQ
+                                   </p>
+                               </div>
+                               <div class="">
+                                   <div class=""></div>
+                                       <div class="float-right">
+                                          <div class="text-center">
+                                            <p>
+                                               {{signataire.fonction}}
+                                           </p>
+                                           <img src="{% static signataire.signature %}" class="img-responsive img-rounded text-center" style="max-height: 100px; max-width: 100px;">
+                                           <p>
+                                               <strong><U>{{signataire.nom_signataire}}</U></strong>  <br>
+                                               <I>{{signataire.titre_honorifique}}</I>
+                                           </p>
+                                         </div>
+                                       </div>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+ {% endblock %}

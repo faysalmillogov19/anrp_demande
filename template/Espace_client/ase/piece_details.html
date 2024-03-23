@@ -1,0 +1,47 @@
+ {% load static %}
+
+<div class="modal fade" id="PieceJointe" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" >        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">
+                    Pièces Jointes <i style="font-size:24px" class="fa">&#xf0a7;</i>
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    <div class="form-group">
+                        <ul class="list-group list-group-flush" name="piece" id="piece_value" required>
+                                  {% if datum.facture_proforma %}
+                                    <li class="list-group-item" class="list-group-item"><a href="{{datum.facture_proforma.url}}" target="Facture Proforma">Facture Proforma</a></li>
+                                  {% endif %}
+
+                                  {% if datum.certicat_bonne_pratique %}
+                                    <li class="list-group-item"><a href="{{datum.certicat_bonne_pratique.url}}" target="Certificat de bonne pratique">Certificat de bonne pratique</a></li>
+                                  {% endif %}
+
+                                  {% if datum.copie_asi %}
+                                     <li class="list-group-item"><a href="{{datum.copie_asi.url}}" target="Copie ASI">Copie ASI</a></li>
+                                  {% endif %}
+
+                                  {% if datum.certificat_origine_prod %}
+                                    <li class="list-group-item"><a href="{{datum.certificat_origine_prod.url}}" target="Certificat origine du produit">Certificat origine du produit</a></li>
+                                  {% endif %}
+
+                                  {% if datum.certificat_atestation_don %}
+                                    <li class="list-group-item" ><a href="{{datum.certificat_atestation_don.url}}" target="Certificat d'attestation de don">Certificat d'attestation de don</a></li>
+                                  {% endif %}
+                        </ul>
+                   </div>
+                </div>
+    
+                <!--div class="card-body">
+                    
+                    <object data="{% static datum.facture_proforma %}" id="asi_piece_details" class="border border-primary" type="application/pdf" width="100%" height="400px">
+                    <p class="text-center">Ce fichier est introuvable {{datum.facture_proforma}}</p>
+                    </object>
+                </div-->
+          </div>
+        </div>
+    </div>
+</div>

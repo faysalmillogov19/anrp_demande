@@ -1,0 +1,211 @@
+ {% load static %}
+ <!DOCTYPE html>
+ <html lang="en">
+ 
+ <head>
+ 
+     <meta charset="utf-8">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+     <meta name="description" content="">
+     <meta name="author" content="">
+ 
+     <title>ANRP</title>
+ 
+     <!-- Custom fonts for this template-->
+     <link href="{% static 'espace_client/vendor/fontawesome-free/css/all.min.css' %}" rel="stylesheet" type="text/css">
+     <link
+         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+         rel="stylesheet">
+ 
+     <!-- Custom styles for this template-->
+     <link href="{% static 'espace_client/css/sb-admin-2.min.css'%}" rel="stylesheet">
+         <link href="{% static 'espace_client/vendor/datatables/dataTables.bootstrap4.min.css'%}" rel="stylesheet">
+ 
+ 
+ </head>
+ <body id="page-top">
+ 
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4 text-dark">
+                        
+                        <div class="card-body" id="printableArea">
+                            <div>
+                                <div class="row" style="font-size: 13px;">
+                                    <div class="col-4 text-center">
+                                        MINISTERE DE LA SANTE <br>
+                                        -------------------- <br>
+                                        SECRETARIAT GENERAL<br>
+                                        -------------------- <br>
+                                        AGENCE NATIONALE DE REGULATION PHARMACEUTIQUE (ANRP) <br>
+                                    </div>
+                                    <div class="col-4">
+                                        
+                                    </div>
+                                    <div class="col-4 float-right">
+                                        <p class="text-center">
+                                            BURKINA FASO <br>
+                                            --------------------- <br>
+                                            Unité - Progrès - gustice
+                                        </p>
+                                        <br>
+
+                                    </div>
+                                    <div style="border: 1px;border-style: double; width: 90%; padding: 2%; margin: 5%;">
+                                        <h6 class="text-center font-weight-bold">{{intitule}}</h6>
+                                    </div>
+                                    
+                                </div>
+                                <ul style="font-size: 15px;">
+                                    <br>
+                                    <li class="font-weight-bold"><span class="font-weight-bold">Code:</span> {{datum.date_soumission|date:"dmY"}}{{datum.id}}</li>
+                                    <li>
+                                        <span class="font-weight-bold">Nom complet : </span> {{datum.demandeur.user.first_name}}  
+                                    </li>
+                                    <li>
+                                        <span class="font-weight-bold">Structure : </span> {{datum.demandeur.structure}}  
+                                    </li>
+                                    <li>
+                                        <span class="font-weight-bold">Expéditeur : </span> {{datum.nom_expediteur}}  
+                                    </li>
+                                    <li>
+                                        <span class="font-weight-bold">Destinataire : </span> {{datum.destinataire}}  
+                                    </li>  
+                                    <li>
+                                        <span class="font-weight-bold"> Date : </span>{{datum.date_soumission|date:"d/m/Y"}}
+                                    </li>
+                                    <li>
+                                        <span class="font-weight-bold"> Email : </span>{{datum.demandeur.user.email}}
+                                    </li>
+                                    <li>
+                                        <span class="font-weight-bold"> Telephone : </span>{{datum.demandeur.tel}}
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="col-12"><br></div>
+                            <div class="table-responsive" style="font-size: 15px;">
+                              {% if produits %}
+                                <table class="table" style="border: 1px solid;">
+                                    <thead>
+                                        <tr style="border: 1px solid;">
+                                            <th style="border: 1px solid;">Dénomination commerciale</th>
+                                            <th style="border: 1px solid;">Catégorie</th>
+                                            <th style="border: 1px solid;">Quantité</th>
+                                            <td style="border: 1px solid;">Prix</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for p in produits %}
+                                        <tr style="border: 1px solid;">
+                                            <td style="border: 1px solid;">{{p.dc}}</td>
+                                            <td style="border: 1px solid;">{{p.categorie.libelle}}</td>
+                                            <td style="border: 1px solid;">{{p.quantite}}</td>
+                                            <td style="border: 1px solid;">{{p.cout}} {{p.devise.libelle}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        <!--tr style="border: 1px solid;">
+                                            <td>TOTAL</td>
+                                            <td></td>
+                                            <td style="border: 1px solid;">{{datum.nombre}}</td>
+                                            <td style="border: 1px solid;">{{datum.cout}}</td>
+                                        </tr-->
+                                    </tbody>
+                                </table>
+                              {% endif %}
+                              {% if adi %}
+                                <table class="table" style="border: 1px solid;">
+                                    <thead>
+                                        <tr style="border: 1px solid;">
+                                            <th style="border: 1px solid;">Ref facture</th>
+                                            <th style="border: 1px solid;">Quantité</th>
+                                            <td style="border: 1px solid;">Prix</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr style="border: 1px solid;">
+                                            <td style="border: 1px solid;">{{datum.code_facture}}</td>
+                                            <td style="border: 1px solid;">{{datum.total_item}}</td>
+                                            <td style="border: 1px solid;">{{datum.cout}} {{datum.devise.libelle}}</td>
+                                        </tr>
+                                        <!--tr style="border: 1px solid;">
+                                            <td>TOTAL</td>
+                                            <td></td>
+                                            <td style="border: 1px solid;">{{datum.nombre}}</td>
+                                            <td style="border: 1px solid;">{{datum.cout}}</td>
+                                        </tr-->
+                                    </tbody>
+                                </table>
+                              {% endif %}
+                            </div>
+                        </div>
+                    </div>
+  
+    <!-- Bootstrap core JavaScript-->
+    <script src="{% static 'espace_client/vendor/jquery/jquery.min.js'%}"></script>
+    <script src="{% static 'espace_client/vendor/bootstrap/js/bootstrap.bundle.min.js'%}"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="{% static 'espace_client/vendor/jquery-easing/jquery.easing.min.js'%}"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="{% static 'espace_client/js/sb-admin-2.min.js'%}"></script>
+
+    
+    <script src="{% static 'espace_client/vendor/datatables/jquery.dataTables.min.js'%}"></script>
+    <script src="{% static 'espace_client/vendor/datatables/dataTables.bootstrap4.min.js'%}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{% static 'espace_client/js/demo/datatables-demo.js'%}"></script>
+
+    <!-- Page level plugins -->
+    <script src="{% static 'espace_client/vendor/chart.js/Chart.min.js'%}"></script>
+
+    <!-- Page level custom scripts -->
+    <script src="{% static 'espace_client/js/demo/chart-area-demo.js'%}"></script>
+    <script src="{% static 'espace_client/js/demo/chart-pie-demo.js'%}"></script>
+    <script>
+        $("#piece_value").change(function(){
+            val=$("#piece_value").val();
+            $('#asi_piece_details').attr('data',val);
+
+        });
+    </script>
+    <script>
+        $('.facture_proforma').click(function(){
+            var url=$('.facture_proforma').val();
+            $('#pdf_reader').attr('data', url);
+
+        });
+    </script>
+    <script>
+        $('.col_profil').each(function() {
+
+            id=this.id
+            $.ajax({
+               type: "GET",
+               url: "/user/get_role/"+id,
+               dataType: 'JSON',
+               success: function(response){
+                    
+                    val=String(response.role)
+                    $(".fp_"+id).text(val);
+                    $(this).attr('data-th',val);
+                
+               }
+            });
+
+        });
+    </script>
+      <script>
+    function printPageArea(areaID){
+        var printContent = document.getElementById(areaID).innerHTML;
+        var originalContent = document.body.innerHTML;
+        document.body.innerHTML = printContent;
+        window.print();
+        document.body.innerHTML = originalContent;
+    }
+  </script>
+
+</body>
+
+</html>

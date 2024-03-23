@@ -1,0 +1,82 @@
+ {% extends 'layout/EspaceClient.html'%}
+ <!-- Page Heading -->
+ {% load static %}
+ {% block content %}
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4">
+                        <div>
+                            <br>
+                        </div>
+                        <div class="row text-white">
+                            <div class="col-6 text-white" style="width: 18rem; background-color: #d63384;">
+                                <div class="card-body">
+                                  <h5 class="card-title">Non payé :</h5>
+                                  <p class="card-text text-center">{{ non_paye.cout__sum}} F CFA</p>
+                                  <div>
+                                      <a class="btn btn-info" href="{% url 'list_impaye_structure' %}"><i class="fa fa-home"></i></a>
+                                      <a class="btn btn-secondary" href=""><i class="fa fa-user"></i></a>
+                                  </div>
+                                </div>
+                            </div>
+                            <div class="col-6 text-white" style="width: 18rem; background-color: #198754;">
+                                <div class="card-body">
+                                  <h5 class="card-title">Montant payé :</h5>
+                                  <p class="card-text text-center">{{ paye.cout__sum}} F CFA</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div></div>
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">Etat des paiement</h6>
+                        </div>
+                        <div class="card-body">
+                            
+                            <div class="table-responsive">
+                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                    <thead>
+                                        <tr>
+                                            <th>N° Prestation</th>
+                                            <th>Ref facture</th>
+                                            <th>Demandeur</th>
+                                            <th>Structure</th>
+                                            <th>Nombre d'item</th>
+                                            <th>Cout</th>
+                                            <th>Etat de paiement</th>
+                                            <th>Date</th>
+                                            <th>Date paiement</th>
+                                            <!--th>Action</th-->
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for d in data %}
+                                        <tr>
+                                            <td>{{d.code}}</td>
+                                            <td>{{d.asi.code_facture}}</td>
+                                            <td>{{d.asi.demandeur.user.first_name}}</td>
+                                            <td>{{d.asi.demandeur.affect_structure.denomination}}</td>
+                                            <td>{{d.nombre}}</td>
+                                            <td>{{d.cout}}</td>
+                                            <td class="text-center">
+                                                {% if d.payer %}
+                                                  <i class="fa fa-check" style="color: green;"></i>
+                                                {% else %}
+                                                    <i class="fa fa-times" style="color: red;"> </i>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{d.created_at | date:'d/m/Y'}}</td>
+                                            <td>{{d.updated_at | date:'d/m/Y'}}</td>
+                                            <!--td>
+                                                <a type="button" class="btn btn-outline-warning" href="#"><i class="fa fa-info"></i></a>
+                                            </td-->
+
+                                        </tr>
+                                         
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+  {% endblock %}

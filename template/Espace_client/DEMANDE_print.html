@@ -1,0 +1,124 @@
+ {% extends 'layout/EspaceClient.html'%}
+ <!-- Page Heading -->
+ {% load static %}
+ {% block content %}
+
+                    <!-- DataTales Example -->
+                    <div class="card shadow mb-4 text-dark">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">{{intitule_demande}}</h6>
+                            <div class="float-right">
+                                <button class="btn btn-primary"><i class="fa fa-print" onclick="printPageArea('printableArea')"></i></button>
+                            </div>
+                        </div>
+                        <div class="card-body" id="printableArea">
+                            <div>
+                                <div class="row" style="font-size: 13px;">
+                                    <div class="col-4 text-center">
+                                        MINISTERE DE LA SANTE <br>
+                                        -------------------- <br>
+                                        SECRETARIAT GENERAL<br>
+                                        -------------------- <br>
+                                        AGENCE NATIONALE DE REGULATION PHARMACEUTIQUE (ANRP) <br>
+                                        -------------------- <br>
+                                    </div>
+                                    <div class="col-4">
+                                        
+                                    </div>
+                                    <div class="col-4 float-right">
+                                        <p class="text-center">
+                                            BURKINA FASO <br>
+                                            --------------------- <br>
+                                            Unité - Progrès - gustice
+                                        </p>
+                                        <br><br>
+                                        <p>
+                                            Ouagadougou, le
+                                        </p>
+
+                                    </div>
+                                    <div style="border: 1px;border-style: double; width: 90%; padding: 2%; margin: 5%;">
+                                        <h4 class="text-center font-weight-bold">
+                                            {{intitule_demande}}<br>
+                                            ( AVIS TECHNIQUE )
+                                        </h4>
+                                    </div>
+                                    
+                                </div>
+                                <div class="display-6 text-justify" style="  font-size: 14px;">
+                                        {{infos.arrete |linebreaks }}
+                                </div>
+                                <div style="font-size: 15px;">
+                                    <br>
+                                    <p class="font-weight-bold"> approuve {{libelle_demande}} :</p>
+                                    <!--p>
+                                        Par DIRECTION DE L'INSPECTION PHARMACEUTIQUE/ANRP, 03 BP 7009 OUAGADOUGOU 03, Tel: 25 32 46 60,  
+                                    </p-->  
+                                    <p>
+                                        Par <span class="font-weight-bold">{{datum.destinataire}}</span> selon la demande N° <span class="font-weight-bold">{{datum.date_soumission|date:"dmY"}}{{datum.id}}</span> datée du <span class="font-weight-bold">{{datum.date_soumission|date:"d/m/Y"}}</span>,
+                                        effectué par <span class="font-weight-bold">{{datum.demandeur.user.first_name}}</span> des médicaments et autres produits de santé suivants
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="col-12"><br></div>
+                            <div class="table-responsive" style="font-size: 15px;">
+                              {% if produits %}
+                                <table class="table" style="border: 1px solid;">
+                                    <thead>
+                                        <tr style="border: 1px solid;">
+                                            <th style="border: 1px solid;">Dénomination commerciale</th>
+                                            <th style="border: 1px solid;">Catégorie</th>
+                                            <th style="border: 1px solid;">Quantité</th>
+                                            <td style="border: 1px solid;">Prix</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for p in produits %}
+                                        <tr style="border: 1px solid;">
+                                            <td style="border: 1px solid;">{{p.dc}}</td>
+                                            <td style="border: 1px solid;">{{p.categorie.libelle}}</td>
+                                            <td style="border: 1px solid;">{{p.quantite}}</td>
+                                            <td style="border: 1px solid;">{{p.cout}} {{p.devise.libelle}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        <!--tr style="border: 1px solid;">
+                                            <td>TOTAL</td>
+                                            <td></td>
+                                            <td style="border: 1px solid;">{{datum.nombre}}</td>
+                                            <td style="border: 1px solid;">{{datum.cout}}</td>
+                                        </tr-->
+                                    </tbody>
+                                </table>
+                              {% endif %}
+                                <div style="font-size: 15px;">
+                                    Provenant du <span class="font-weight-bold">{{datum.nom_expediteur}}, {{datum.adresse_expediteur}}</span>
+                                </div>
+                                <div>
+                                    <br>
+                                    <h5 class="font-weight-bold">NB:</h5>
+                                    <p>
+                                        {{datum.objet.description}}
+                                    </p>
+                                    <p style="  font-size: 13px;">
+                                        Cet avis technique est valable pour une durée de 12 mois à compter de sa date de signature, en une entrée(s),<br>
+                                        le transit sera assuré par <span class="font-weight-bold">{{datum.nom_transitaire}}, {{datum.adresse_transitaire}}</span>
+                                        uniquement par voie <span class="font-weight-bold">{{datum.voie_entree.libelle}}</span> 
+                                        .
+                                    </p>
+                                </div>
+                                <div class="">
+                                    <div class=""></div>
+                                        <div class="float-right">
+                                            <p class="text-center">
+                                                {{signataire.fonction}}
+                                            </p>
+                                            <img src="{% static signataire.signature %}" class="img-responsive img-rounded text-center" style="max-height: 100px; max-width: 100px;">
+                                            <p class="text-center">
+                                                {{signataire.nom_signataire}}
+                                            </p>
+                                        </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+  {% endblock %}
